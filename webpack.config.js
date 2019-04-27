@@ -1,4 +1,5 @@
-const path = require("path")
+var path = require("path")
+const HtmlWebPackPlugin = require("html-webpack-plugin")
 
 // webpack.config.js
 module.exports = {
@@ -8,6 +9,7 @@ module.exports = {
         filename: "sketch.js",
     },
     module: {
+        noParse: /./,
         rules: [
             {
                 test: /\.js$/,
@@ -27,9 +29,12 @@ module.exports = {
         ],
     },
     devServer: {
-        contentBase: path.join(__dirname, "public"),
-        publicPath: path.join(__dirname, "build"),
-        compress: true,
-        port: 3000,
+        contentBase: "build",
     },
+    plugins: [
+        new HtmlWebPackPlugin({
+            template: "./src/index.html",
+            filename: "./index.html",
+        }),
+    ],
 }
